@@ -1,14 +1,14 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR "/src/ApiTier"
 COPY . .
-RUN dotnet build "WebApi.csproj" -c Release -o /app
+RUN dotnet build "WebApi.csproj" -c Debug -o /app
 
 FROM build AS publish
-RUN dotnet publish "WebApi.csproj" -c Release -o /app
+RUN dotnet publish "WebApi.csproj" -c Debug -o /app
 
 FROM base AS final
 WORKDIR /app
